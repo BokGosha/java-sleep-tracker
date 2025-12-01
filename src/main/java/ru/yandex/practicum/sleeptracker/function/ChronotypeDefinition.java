@@ -1,15 +1,18 @@
 package ru.yandex.practicum.sleeptracker.function;
 
+import ru.yandex.practicum.sleeptracker.SleepAnalysisResult;
 import ru.yandex.practicum.sleeptracker.SleepingSession;
 
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Function;
 
-public class ChronotypeDefinition implements Function<List<SleepingSession>, String> {
+public class ChronotypeDefinition implements Function<List<SleepingSession>, SleepAnalysisResult> {
+
+    private static final String DESCRIPTION = "Тип человека";
 
     @Override
-    public String apply(List<SleepingSession> sleepingSessions) {
+    public SleepAnalysisResult apply(List<SleepingSession> sleepingSessions) {
         Map<String, Integer> sessionsCount = new HashMap<>();
 
         List<SleepingSession> nights = new CountSleeplessNights().addNightWithSleep(sleepingSessions);
@@ -20,11 +23,13 @@ public class ChronotypeDefinition implements Function<List<SleepingSession>, Str
             sessionsCount.put(type, sessionsCount.getOrDefault(type, 0) + 1);
         });
 
-        return sessionsCount.entrySet()
+        String chronotype = sessionsCount.entrySet()
                 .stream()
                 .max(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey)
                 .orElse("не определено");
+
+        return new SleepAnalysisResult(DESCRIPTION, chronotype);
     }
 
     private String determineSessionType(SleepingSession session) {

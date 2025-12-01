@@ -9,18 +9,18 @@ public enum FunctionType {
     COUNT_SLEEPING_SESSIONS(new CountSleepingSessions()),
     MIN_SLEEPING_SESSION(new MinSleepingSession()),
     MAX_SLEEPING_SESSION(new MaxSleepingSession()),
-    AVERAGE_SLEEPING_SESSIONS(new AverageSleepingSessions()),
+    AVERAGE_SLEEPING_SESSIONS(new AverageDurationSleepingSessions()),
     COUNT_BAD_SLEEPING_SESSIONS(new CountBadSleepingSessions()),
     COUNT_SLEEPLESS_NIGHTS(new CountSleeplessNights()),
     CHRONOTYPE_DEFINITION(new ChronotypeDefinition());
 
-    private final Function<List<SleepingSession>, String> function;
+    private final Function<List<SleepingSession>, SleepAnalysisResult> function;
 
-    FunctionType(Function<List<SleepingSession>, String> function) {
+    FunctionType(Function<List<SleepingSession>, SleepAnalysisResult> function) {
         this.function = function;
     }
 
-    public Function<List<SleepingSession>, String> getFunction() {
+    public Function<List<SleepingSession>, SleepAnalysisResult> getFunction() {
         return function;
     }
 }

@@ -1,23 +1,26 @@
 package ru.yandex.practicum.sleeptracker.function;
 
+import ru.yandex.practicum.sleeptracker.SleepAnalysisResult;
 import ru.yandex.practicum.sleeptracker.SleepingSession;
 
 import java.util.List;
 import java.util.function.Function;
 
-public class MaxSleepingSession implements Function<List<SleepingSession>, String> {
+public class MaxSleepingSession implements Function<List<SleepingSession>, SleepAnalysisResult> {
+
+    private static final String DESCRIPTION = "Максимальная продолжительность сессии (в минутах)";
 
     @Override
-    public String apply(List<SleepingSession> sleepingSessions) {
+    public SleepAnalysisResult apply(List<SleepingSession> sleepingSessions) {
         if (sleepingSessions == null) {
-            return "0";
+            return new SleepAnalysisResult(DESCRIPTION, 0);
         }
 
-        String result = String.valueOf(sleepingSessions.stream()
+        long maxDurationOfSleepingSessions = sleepingSessions.stream()
                 .map(sleepingSession -> sleepingSession.getDuration().toMinutes())
                 .max(Long::compareTo)
-                .orElse(0L));
+                .orElse(0L);
 
-        return result;
+        return new SleepAnalysisResult(DESCRIPTION, maxDurationOfSleepingSessions);
     }
 }

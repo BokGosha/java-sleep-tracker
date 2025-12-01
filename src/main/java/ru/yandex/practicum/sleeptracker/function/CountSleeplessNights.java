@@ -1,5 +1,6 @@
 package ru.yandex.practicum.sleeptracker.function;
 
+import ru.yandex.practicum.sleeptracker.SleepAnalysisResult;
 import ru.yandex.practicum.sleeptracker.SleepingSession;
 
 import java.time.LocalDate;
@@ -9,12 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public class CountSleeplessNights implements Function<List<SleepingSession>, String> {
+public class CountSleeplessNights implements Function<List<SleepingSession>, SleepAnalysisResult> {
+
+    private static final String DESCRIPTION = "Количество бессонных ночей";
 
     @Override
-    public String apply(List<SleepingSession> sleepingSessions) {
+    public SleepAnalysisResult apply(List<SleepingSession> sleepingSessions) {
         if (sleepingSessions == null || sleepingSessions.isEmpty()) {
-            return "0";
+            return new SleepAnalysisResult(DESCRIPTION, 0);
         }
 
         LocalDate startDate = sleepingSessions.getFirst().getStartSleeping().toLocalDate();
@@ -32,9 +35,9 @@ public class CountSleeplessNights implements Function<List<SleepingSession>, Str
 
         List<SleepingSession> nightsWithSleep = addNightWithSleep(sleepingSessions);
 
-        String result = String.valueOf(totalNights - nightsWithSleep.size());
+        int totalNightsWithoutSleep = totalNights - nightsWithSleep.size();
 
-        return result;
+        return new SleepAnalysisResult(DESCRIPTION, totalNightsWithoutSleep);
     }
 
     public List<SleepingSession> addNightWithSleep(List<SleepingSession> sleepingSessions) {

@@ -23,18 +23,18 @@ class CountSleeplessNightsFunctionTest {
         SleepingSession session1 = new SleepingSession(
                 LocalDateTime.of(2025, 10, 30, 21, 0),
                 LocalDateTime.of(2025, 10, 30, 23, 0),
-                "BAD"
+                SleepQuality.BAD
         );
 
         SleepingSession session2 = new SleepingSession(
                 LocalDateTime.of(2025, 10, 31, 21, 0),
                 LocalDateTime.of(2025, 10, 31, 23, 0),
-                "BAD"
+                SleepQuality.BAD
         );
 
-        String result = countSleeplessNights.apply(List.of(session1, session2));
+        SleepAnalysisResult result = countSleeplessNights.apply(List.of(session1, session2));
 
-        assertEquals("1", result);
+        assertEquals(1, result.getResult());
     }
 
     @Test
@@ -42,12 +42,12 @@ class CountSleeplessNightsFunctionTest {
         SleepingSession session2 = new SleepingSession(
                 LocalDateTime.of(2025, 11, 30, 1, 0),
                 LocalDateTime.of(2025, 11, 30, 5, 0),
-                "BAD"
+                SleepQuality.BAD
         );
 
-        String result = countSleeplessNights.apply(List.of(session2));
+        SleepAnalysisResult result = countSleeplessNights.apply(List.of(session2));
 
-        assertEquals("0", result);
+        assertEquals(0, result.getResult());
     }
 
     @Test
@@ -55,12 +55,12 @@ class CountSleeplessNightsFunctionTest {
         SleepingSession session3 = new SleepingSession(
                 LocalDateTime.of(2025, 11, 30, 22, 0),
                 LocalDateTime.of(2025, 12, 1, 6, 0),
-                "GOOD"
+                SleepQuality.GOOD
         );
 
-        String result = countSleeplessNights.apply(List.of(session3));
+        SleepAnalysisResult result = countSleeplessNights.apply(List.of(session3));
 
-        assertEquals("0", result);
+        assertEquals(0, result.getResult());
     }
 
     @Test
@@ -68,11 +68,11 @@ class CountSleeplessNightsFunctionTest {
         SleepingSession session4 = new SleepingSession(
                 LocalDateTime.of(2025, 11, 30, 2, 0),
                 LocalDateTime.of(2025, 11, 30, 4, 0),
-                "BAD"
+                SleepQuality.BAD
         );
 
-        String result = countSleeplessNights.apply(List.of(session4));
+        SleepAnalysisResult result = countSleeplessNights.apply(List.of(session4));
 
-        assertEquals("0", result);
+        assertEquals(0, result.getResult());
     }
 }

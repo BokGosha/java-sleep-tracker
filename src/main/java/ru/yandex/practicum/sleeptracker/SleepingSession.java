@@ -7,9 +7,9 @@ public class SleepingSession {
 
     private final LocalDateTime startSleeping;
     private final LocalDateTime endSleeping;
-    private final String sleepQuality;
+    private final SleepQuality sleepQuality;
 
-    public SleepingSession(LocalDateTime startSleeping, LocalDateTime endSleeping, String sleepQuality) {
+    public SleepingSession(LocalDateTime startSleeping, LocalDateTime endSleeping, SleepQuality sleepQuality) {
         this.startSleeping = startSleeping;
         this.endSleeping = endSleeping;
         this.sleepQuality = sleepQuality;
@@ -19,7 +19,7 @@ public class SleepingSession {
         return Duration.between(startSleeping, endSleeping);
     }
 
-    public String getSleepQuality() {
+    public SleepQuality getSleepQuality() {
         return sleepQuality;
     }
 
